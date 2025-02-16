@@ -38,12 +38,14 @@ class Actor(models.Model):
     def full_name(self):
         return f"{self.first_name} {self.last_name}"
 
+
 def create_custom_path(movie, filename):
-   _, ext = os.path.splitext(filename)
-   return os.path.join(
-       "uploads/images/",
-       f"{slugify(movie.title)}-{uuid.uuid4()}{ext}"
-   )
+    _, ext = os.path.splitext(filename)
+    return os.path.join(
+        "uploads/images/",
+        f"{slugify(movie.title)}-{uuid.uuid4()}{ext}"
+    )
+
 
 class Movie(models.Model):
     title = models.CharField(max_length=255)
@@ -51,7 +53,9 @@ class Movie(models.Model):
     duration = models.IntegerField()
     genres = models.ManyToManyField(Genre)
     actors = models.ManyToManyField(Actor)
-    image = models.ImageField(blank=True, null=True, upload_to=create_custom_path)
+    image = models.ImageField(blank=True,
+                              null=True,
+                              upload_to=create_custom_path)
 
     class Meta:
         ordering = ["title"]
